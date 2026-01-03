@@ -1,0 +1,50 @@
+/* 1. 定义全局CSS变量，用于主题色 */
+:root {
+  --primary-color: #409eff; /* Element Plus 主蓝 */
+  --primary-deep: #337ecc;
+  --bg-color: #f5f7fa;     /* 页面背景 */
+  --text-color: #303133;   /* 主要文字 */
+  --card-bg: #ffffff;      /* 卡片背景 */
+  --shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+/* 2. 基础重置与设置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* 3. 主容器样式 */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 4. 页面内容区域的通用样式 */
+.page-content {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px;
+  width: 100%;
+  flex: 1;
+}
+
+/* 5. 通用卡片样式 */
+.common-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
