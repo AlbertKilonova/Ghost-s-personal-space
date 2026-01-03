@@ -6,6 +6,7 @@ const BlogDetail = () => import('@/views/BlogDetail.vue')
 const Projects = () => import('@/views/Projects.vue')
 const Contact = () => import('@/views/Contact.vue')
 const About = () => import('@/views/About.vue')
+const Admin = () => import('@/admin/Admin.vue')
 const NotFound = () => import('@/views/NotFond.vue')
 
 const routes = [
@@ -53,6 +54,12 @@ const routes = [
     meta: { 
       title: '关于'
     }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    meta: { requiresAuth: true }
   },
   {
     path: '/:pathMatch(.*)*',
