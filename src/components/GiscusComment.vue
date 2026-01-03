@@ -11,7 +11,7 @@
       reactions-enabled="1"
       emit-metadata="0"
       input-position="top"
-      theme="https://giscus.app/themes/custom_example.css"
+      theme="/giscus-theme.css"
       lang="zh-CN"
       loading="lazy"
       crossorigin="anonymous"
