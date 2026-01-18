@@ -22,3 +22,5 @@ app.use(router)
 app.use(ElementPlus);
 
 app.mount('#app')
+
+console.log("应用程序已启动");

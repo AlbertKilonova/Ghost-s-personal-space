@@ -1,7 +1,7 @@
 <template>
   <div class="about-page">
     <!-- 基本信息卡片 -->
-    <ProfileCard 
+    <ProfileCard
       name="GHOST"
       title="再温柔一点，再坚强一点"
       location="-幽灵猫-"
@@ -9,12 +9,12 @@
     />
 
     <el-space direction="vertical" :size="30" style="width: 100%; margin-top: 20px;">
-      
+
       <!-- 关于我 -->
       <SectionCard title="关于我">
         <div class="content">
           <p>
-            我是幽灵
+            [幽灵的简介]
           </p>
         </div>
       </SectionCard>

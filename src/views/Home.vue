@@ -1,20 +1,16 @@
 <template>
   <div class="home">
-    <!-- 欢迎卡片 -->
     <WelcomeCard />
     
-    <!-- 最近动态（从博客加载） -->
     <RecentSection 
-      v-if="!isLoading && recentBlogs.length > 0"
+      v-if="recentBlogs.length > 0"
       title="最新文章" 
       :items="recentBlogs"
       @item-click="handleBlogClick"
     />
     
-    <!-- 加载骨架屏 -->
     <el-skeleton v-if="isLoading" :rows="3" animated style="margin-top: 30px;" />
     
-    <!-- 空状态 -->
     <el-empty 
       v-if="!isLoading && recentBlogs.length === 0" 
       description="暂无文章"
@@ -24,51 +20,37 @@
 </template>
 
 <script setup>
-/**
- * 主页视图组件
- * 动态加载最近3篇博客并展示
- */
-
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { loadAllPosts } from '@/utils/md-loader'
+import { usePostStore } from '@/stores/posts' // ✅ 使用 Store
 import WelcomeCard from '@/components/WelcomeCard.vue'
 import RecentSection from '@/components/RecentSection.vue'
 
 const router = useRouter()
-const recentBlogs = ref([])
-const isLoading = ref(true)
+const postStore = usePostStore()
 
-onMounted(async () => {
-  try {
-    const allPosts = await loadAllPosts()
-    
-    // 取最近3篇，格式化为 RecentItem 需要的数据
-    recentBlogs.value = allPosts
-      .slice(0, 3)
-      .map(post => ({
-        icon: 'Notebook',
-        title: post.title,
-        description: post.excerpt.length > 60 
-          ? post.excerpt.substring(0, 60) + '...' 
-          : post.excerpt,
-        path: `/blog/${post.id}`,
-        clickable: true
-      }))
-  } catch (error) {
-    console.error('加载最近文章失败:', error)
-    ElMessage.error('加载失败')
-  } finally {
-    isLoading.value = false
-  }
+// 使用 computed 自动响应 store 数据变化
+const isLoading = computed(() => postStore.isLoading)
+
+const recentBlogs = computed(() => {
+  // 从 Store 获取前 3 篇
+  const posts = postStore.recentPosts(3)
+  return posts.map(post => ({
+    icon: 'Notebook',
+    title: post.title,
+    description: post.excerpt,
+    path: `/blog/${post.id}`,
+    clickable: true
+  }))
 })
 
-// 点击跳转到博客详情
+onMounted(() => {
+  // ✅ 触发 Store 加载 (有缓存机制)
+  postStore.fetchPosts()
+})
+
 const handleBlogClick = (item) => {
-  if (item.path) {
-    router.push(item.path)
-  }
+  if (item.path) router.push(item.path)
 }
 </script>
 
